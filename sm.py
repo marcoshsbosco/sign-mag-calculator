@@ -155,6 +155,63 @@ def subtract(a, b):
     return res
 
 
+def multiply(q, m):
+    print("Executing multiplication...")
+
+    # check if q or m is zero
+    if q == "0" * 16 or m == "0" * 16 or q == "1" + "0" * 15 or m == "1" + "0" * 15:
+        print("At least one operand is zero, result is zero (trivial)")
+
+        return "0" * 16
+
+    if q[0] == m[0]:
+        print("Operands of same sign, result will be positive")
+        res_sign = "0"
+    else:
+        print("Operands of opposite signs, result will be negative")
+        res_sign = "1"
+
+    # ignore sign bits
+    q = q[1:]
+    m = m[1:]
+
+    c = "0"
+    a = "0" * 15
+    print("\n---Initial values---")
+    print(f"c: {c}")
+    print(f"a: {a}")
+    print(f"q: {q}")
+    print(f"m: {m}")
+
+    for i in range(len(q), 0, -1):  # loops q from right to left
+        print(f"\n---Cycle {len(q) + 1 - i}---")
+
+        if q[len(q) - 1] == "1":  # least significant bit in q (q0)
+            # c,a = a + m
+            print("(q0 = 1) c,a = a + m")
+            r = add("0" + a, "0" + m)
+            c = r[0]
+            a = r[1:]
+
+            print(f"c: {c}")
+            print(f"a: {a}\n")
+
+        # right shift c,a,q
+        print("Right-shifting c,a,q")
+        q = a[len(a) - 1] + q[:-1]
+        a = c + a[:-1]
+        c = "0"
+
+        print(f"c: {c}")
+        print(f"a: {a}")
+        print(f"q: {q}")
+        print(f"m: {m}")
+
+    res = res_sign + a + q
+
+    return res
+
+
 a, b, op = read_input()
 
 a = to_binary(a, bits=16)
@@ -167,5 +224,7 @@ if op == "+":
     res = add(a, b)
 if op == "-":
     res = subtract(a, b)
+if op == "*":
+    res = multiply(a, b)
 
 print(f"\nResult: {res}")
