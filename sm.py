@@ -215,9 +215,14 @@ def divide(d, v):
 
     # check if v is zero
     if v == "0" * 16 or v == "1" + "0" * 15:
-        print("v is zero, can't divide")
+        if d == "0" * 16 or d == "1" + "0" * 15:
+            print("d and v are zero, result is indeterminate (trivial)")
 
-        return "Undefined"
+            return "Indeterminate"
+        else:
+            print("v is zero, can't divide")
+
+            return "Undefined"
 
     if d[0] == v[0]:
         print("Operands of same sign, result will be positive")
