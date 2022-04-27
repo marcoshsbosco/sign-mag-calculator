@@ -188,13 +188,15 @@ def multiply(q, m):
 
         if q[len(q) - 1] == "1":  # least significant bit in q (q0)
             # c,a = a + m
-            print("(q0 = 1) c,a = a + m")
+            print("(q0 = 1)\nc,a receiving a + m")
             r = add("0" + a, "0" + m)
             c = r[0]
             a = r[1:]
 
             print(f"c: {c}")
             print(f"a: {a}\n")
+        else:
+            print("(q0 = 0)")
 
         # right shift c,a,q
         print("Right-shifting c,a,q")
