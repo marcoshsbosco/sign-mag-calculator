@@ -212,6 +212,62 @@ def multiply(q, m):
     return res
 
 
+def divide(d, v):
+    print("Executing division...")
+
+    if d[0] == v[0]:
+        print("Operands of same sign, result will be positive")
+        res_sign = "0"
+    else:
+        print("Operands of opposite signs, result will be negative")
+        res_sign = "1"
+
+    print(f"Remainder will have the same sign as d ({d[0]})")
+    rem_sign = d[0]
+
+    # ignore sign bits
+    d = d[1:]
+    v = v[1:]
+
+    # magnitude check
+    for i in range(1, len(d)):
+        if d[i] != v[i]:
+            if d[i] == "1":
+                largest = "d"
+            else:
+                largest = "v"
+
+            break
+    else:
+        largest = "d"
+
+    q = "0" * len(d)
+
+    # division
+    while largest == "d":
+        print("\nd is not less than v")
+
+        d = subtract(d, v)
+        q = add(q, "0" * (len(d) - 1) + "1")  # increment
+
+        # magnitude check
+        for i in range(1, len(d)):
+            if d[i] != v[i]:
+                if d[i] == "1":
+                    largest = "d"
+                else:
+                    largest = "v"
+
+                break
+        else:
+            largest = "d"
+
+    print("\nd is less than v")
+    print(f"Remainder: {rem_sign + d}")
+
+    return res_sign + q
+
+
 a, b, op = read_input()
 
 a = to_binary(a, bits=16)
@@ -226,5 +282,7 @@ if op == "-":
     res = subtract(a, b)
 if op == "*":
     res = multiply(a, b)
+if op == "/":
+    res = divide(a, b)
 
 print(f"\nResult: {res}")
