@@ -8,10 +8,6 @@ def read_input():
     return a, b, op
 
 
-def is_zero(a, b):
-    return True if a == 0 or b == 0 else False
-
-
 def to_binary(n, bits):
     negative = True if n < 0 else False
     binary = ""
