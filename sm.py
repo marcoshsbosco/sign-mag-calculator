@@ -213,6 +213,12 @@ def multiply(q, m):
 def divide(d, v):
     print("Executing division...")
 
+    # check if v is zero
+    if v == "0" * 16 or v == "1" + "0" * 15:
+        print("v is zero, can't divide")
+
+        return "Undefined"
+
     if d[0] == v[0]:
         print("Operands of same sign, result will be positive")
         res_sign = "0"
