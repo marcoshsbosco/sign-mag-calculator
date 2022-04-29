@@ -9,6 +9,11 @@ def read_input():
 
 
 def to_binary(n, bits):
+    if n > 32767:
+        raise ArithmeticError('OverflowError')
+    elif n < -32767:
+        raise ArithmeticError('UnderflowError')
+
     negative = True if n < 0 else False
     binary = ""
 
@@ -47,6 +52,12 @@ def add(a, b):
             else:
                 res += str(tmp)
                 carry = 0
+
+        if carry:
+            if a[0] == "0":
+                raise ArithmeticError('OverflowError')
+            else:
+                raise ArithmeticError("UnderflowError")
 
         res += a[0]  # repeat sign bit
         res = res[::-1]
@@ -145,8 +156,14 @@ def subtract(a, b):
         a_abs = "0" + a[1:]
         b_abs = "0" + b[1:]
 
-        res = add(a_abs, b_abs)
-        res = a[0] + res[1:]
+        try:
+            res = add(a_abs, b_abs)
+            res = a[0] + res[1:]
+        except ArithmeticError:
+            if a[0] == "0":
+                raise
+            else:
+                raise ArithmeticError("UnderflowError")
 
     return res
 
@@ -279,8 +296,14 @@ def divide(d, v):
 
 a, b, op = read_input()
 
-a = to_binary(a, bits=16)
-b = to_binary(b, bits=16)
+try:
+    a = to_binary(a, bits=16)
+    b = to_binary(b, bits=16)
+except ArithmeticError:
+    print("Please use numbers between -32767 and 32767 (inclusive)\n")
+
+    raise
+
 print(f"a: {a}")
 print(f"b: {b}")
 print("")
