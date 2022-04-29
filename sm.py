@@ -177,6 +177,7 @@ def multiply(q, m):
 
         return "0" * 16
 
+    # check result's sign based on operands
     if q[0] == m[0]:
         print("Operands of same sign, result will be positive")
         res_sign = "0"
